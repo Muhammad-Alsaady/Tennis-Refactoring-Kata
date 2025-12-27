@@ -1,21 +1,15 @@
 namespace Tennis
 {
-    public class TennisGame1 : ITennisGame
+    public class TennisGame1(string player1Name, string player2Name) : ITennisGame
     {
         private int m_score1 = 0;
         private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
-
-        public TennisGame1(string player1Name, string player2Name)
-        {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
-        }
+        private readonly string _player1Name = player1Name;
+        private readonly string _player2Name = player2Name;
 
         public void WonPoint(string playerName)
         {
-            if (playerName == "player1")
+            if (playerName == _player1Name)
                 m_score1 += 1;
             else
                 m_score2 += 1;
@@ -34,7 +28,6 @@ namespace Tennis
         {
             return $"{ScoresText(m_score1)}-{ScoresText(m_score2)}";
         }
-
         private string ScoresText(int score)
         {
             return score switch
@@ -46,11 +39,8 @@ namespace Tennis
                 _ => ThrowInvalidScoreException()
             };
         }
-
         private static string ThrowInvalidScoreException()
            => throw new System.Exception("Invalid score");
-        
-
         private string ScoresOver4Case()
         {
             var minusResult = GetScoreDifference();
@@ -63,25 +53,13 @@ namespace Tennis
         private int GetScoreDifference() => m_score1 - m_score2;
         private string EqualScoresCase()
         {
-            string score = "";
-            switch (m_score1)
+            return m_score1 switch
             {
-                case 0:
-                    score = "Love-All";
-                    break;
-                case 1:
-                    score = "Fifteen-All";
-                    break;
-                case 2:
-                    score = "Thirty-All";
-                    break;
-                default:
-                    score = "Deuce";
-                    break;
-
-            }
-
-            return score;
+                0 => "Love-All",
+                1 => "Fifteen-All",
+                2 => "Thirty-All",
+                _ => "Deuce"
+            };
         }
     }
     
