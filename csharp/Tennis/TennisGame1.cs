@@ -23,49 +23,33 @@ namespace Tennis
 
         public string GetScore()
         {
-            string score = "";
-            var tempScore = 0;
             if (m_score1 == m_score2)
-            {
                 return EqualScoresCase();
-            }
             else if (m_score1 >= 4 || m_score2 >= 4)
-            {
                 return ScoresOver4Case(); 
-            }
-            else
-            {
-                return NormalScoreCase();
-            }
-            return score;
+            return NormalScoreCase();
         }
 
         private string NormalScoreCase()
         {
-            string score = "";
-            var tempScore = 0;
-            for (var i = 1; i < 3; i++)
-            {
-                if (i == 1) tempScore = m_score1;
-                else { score += "-"; tempScore = m_score2; }
-                switch (tempScore)
-                {
-                    case 0:
-                        score += "Love";
-                        break;
-                    case 1:
-                        score += "Fifteen";
-                        break;
-                    case 2:
-                        score += "Thirty";
-                        break;
-                    case 3:
-                        score += "Forty";
-                        break;
-                }
-            }
-            return score;
+            return $"{ScoresText(m_score1)}-{ScoresText(m_score2)}";
         }
+
+        private string ScoresText(int score)
+        {
+            return score switch
+            {
+                0 => "Love",
+                1 => "Fifteen",
+                2 => "Thirty",
+                3 => "Forty",
+                _ => ThrowInvalidScoreException()
+            };
+        }
+
+        private static string ThrowInvalidScoreException()
+           => throw new System.Exception("Invalid score");
+        
 
         private string ScoresOver4Case()
         {
