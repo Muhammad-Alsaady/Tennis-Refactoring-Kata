@@ -35,25 +35,33 @@ namespace Tennis
             }
             else
             {
-                for (var i = 1; i < 3; i++)
+                return NormalScoreCase();
+            }
+            return score;
+        }
+
+        private string NormalScoreCase()
+        {
+            string score = "";
+            var tempScore = 0;
+            for (var i = 1; i < 3; i++)
+            {
+                if (i == 1) tempScore = m_score1;
+                else { score += "-"; tempScore = m_score2; }
+                switch (tempScore)
                 {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
-                    switch (tempScore)
-                    {
-                        case 0:
-                            score += "Love";
-                            break;
-                        case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
-                        case 3:
-                            score += "Forty";
-                            break;
-                    }
+                    case 0:
+                        score += "Love";
+                        break;
+                    case 1:
+                        score += "Fifteen";
+                        break;
+                    case 2:
+                        score += "Thirty";
+                        break;
+                    case 3:
+                        score += "Forty";
+                        break;
                 }
             }
             return score;
